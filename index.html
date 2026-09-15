@@ -58,7 +58,78 @@
           <button class="lesson" data-topic="5" aria-pressed="false"><span class="lesson-index">06</span><strong>الأصناف</strong><span lang="en">Classes</span><span class="lesson-arrow" aria-hidden="true">↗</span></button>
         </div>
         <div class="topic-preview" aria-live="polite"><div><span class="preview-label">لمحة عن الموضوع</span><h3 id="topic-title">المتغيرات وأنواع البيانات</h3><p id="topic-description">تعرّف على كيفية تخزين الأرقام والنصوص واستخدامها داخل برنامجك.</p></div><code id="topic-code" dir="ltr">String name = "Future Developer";</code></div>
-        <p class="coming-soon">المحتوى التعليمي الكامل قيد الإعداد. هذه معاينة للمسار القادم.</p>
+        <div class="learning-progress" aria-label="تقدمك في Java">
+          <div><strong>تقدمك في Java</strong><p id="progress-label">0 من 6 دروس · 0%</p></div>
+          <progress id="course-progress" max="6" value="0" aria-label="الدروس المكتملة">0 من 6</progress>
+          <strong id="xp-total" dir="ltr">0 XP</strong>
+        </div>
+        <a class="button" href="#variables">ابدأ درس المتغيرات ←</a>
+        <p class="coming-soon">درس المتغيرات متاح الآن. بقية الموضوعات متاحة كمعاينات حتى اكتمال محتواها.</p>
+      </div>
+    </section>
+    <section class="wrap variables-section" id="variables" aria-labelledby="variables-title">
+      <a class="text-link" href="#path">→ العودة إلى المسار</a>
+      <div class="section-heading"><div><span class="eyebrow">JAVA / الدرس 01</span><h2 id="variables-title">المتغيرات: مكان لكل قيمة.</h2><p>ابدأ بتخزين معلومة، ثم استخدمها في برنامجك.</p></div><span class="course-badge" id="lesson-status">غير مكتمل · +10 XP</span></div>
+      <div class="learning-layout">
+        <div>
+          <article class="learning-card">
+            <span class="eyebrow">01 / افهم الفكرة</span><h3>ما المتغير؟</h3>
+            <p>تخيّل صندوقًا له اسم، تحفظ فيه قيمة وتستطيع تغييرها لاحقًا. في Java نكتب نوع البيانات، ثم اسم المتغير، ثم القيمة. وتنتهي التعليمة بفاصلة منقوطة <bdi dir="ltr">;</bdi>.</p>
+            <pre class="lesson-code" dir="ltr"><code>int age = 20;</code></pre>
+            <p><bdi dir="ltr">int</bdi> هو نوع البيانات، و<bdi dir="ltr">age</bdi> اسم المتغير، و<bdi dir="ltr">20</bdi> قيمته.</p>
+            <div class="type-table"><table><caption>أنواع ستستخدمها كثيرًا</caption><thead><tr><th scope="col">النوع</th><th scope="col">يخزّن</th><th scope="col">مثال</th></tr></thead><tbody>
+              <tr><td><code>int</code></td><td>عددًا صحيحًا</td><td><code dir="ltr">20</code></td></tr>
+              <tr><td><code>double</code></td><td>عددًا عشريًا</td><td><code dir="ltr">19.5</code></td></tr>
+              <tr><td><code>boolean</code></td><td>قيمة منطقية</td><td><code dir="ltr">true / false</code></td></tr>
+              <tr><td><code>char</code></td><td>حرفًا واحدًا</td><td><code dir="ltr">'A'</code></td></tr>
+              <tr><td><code>String</code></td><td>نصًا</td><td><code dir="ltr">"Sara"</code></td></tr>
+            </tbody></table></div>
+            <p class="learning-note">تُكتب النصوص بين علامتي تنصيص مزدوجتين، والحرف بين علامتي تنصيص مفردتين. لاحظ أن String يبدأ بحرف كبير، وهو نوع مرجعي، أما الأنواع الأربعة الأخرى هنا فأنواع بدائية.</p>
+          </article>
+          <article class="learning-card">
+            <span class="eyebrow">02 / شاهد المثال</span><h3>غيّر القيمة واطبعها</h3><p>هذا برنامج كامل. داخل <bdi dir="ltr">main</bdi> نعرّف متغيرين، ثم نزيد العمر سنة ونطبع القيم.</p>
+            <pre class="lesson-code" dir="ltr"><code>public class Main {
+    public static void main(String[] args) {
+        String name = "Sara";
+        int age = 20;
+        age = age + 1;
+
+        System.out.println(name);
+        System.out.println(age);
+    }
+}</code></pre>
+            <p><strong>الناتج المتوقع:</strong></p><pre class="lesson-output" dir="ltr"><code>Sara
+21</code></pre><p>القيمة الجديدة لـ <bdi dir="ltr">age</bdi> هي 21. عند تغيير قيمته لا نكتب النوع مرة أخرى.</p>
+          </article>
+          <article class="learning-card">
+            <span class="eyebrow">03 / اختبر فهمك</span>
+            <fieldset class="quiz-options"><legend>أي تعريف صحيح لتخزين عدد الكتب كعدد صحيح؟</legend>
+              <label><input type="radio" name="variables-quiz" value="text"><code dir="ltr">int books = "5";</code></label>
+              <label><input type="radio" name="variables-quiz" value="correct"><code dir="ltr">int books = 5;</code></label>
+              <label><input type="radio" name="variables-quiz" value="type"><code dir="ltr">boolean books = 5;</code></label>
+            </fieldset>
+            <p id="quiz-feedback" class="feedback" role="status">اختر إجابة لتظهر النتيجة وتفسيرها فورًا.</p>
+          </article>
+          <article class="learning-card">
+            <span class="eyebrow">04 / جرّب بنفسك</span><h3>بطاقتك الأولى</h3>
+            <p>عرّف متغيرًا نصيًا باسم <bdi dir="ltr">name</bdi> يحتوي على اسمك، ومتغيرًا صحيحًا باسم <bdi dir="ltr">age</bdi> يحتوي على عمرك، ثم اطبع كل قيمة في سطر. اكتب التعليمات التي توضع داخل <bdi dir="ltr">main</bdi>.</p>
+            <label for="exercise-code" class="exercise-label">محاولتك</label>
+            <textarea id="exercise-code" dir="ltr" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="// Write your Java code here" aria-describedby="exercise-note"></textarea>
+            <p id="exercise-note" class="learning-note">مساحة للتدريب والمقارنة بالحَل؛ لا يتم تشغيل الكود أو تصحيحه تلقائيًا. تُحفظ محاولتك في هذا المتصفح عند توفر التخزين.</p>
+            <button class="button secondary-button" id="solution-toggle" type="button" aria-expanded="false" aria-controls="model-solution">إظهار الحل النموذجي</button>
+            <div id="model-solution" hidden><p>قد يختلف الاسم والعمر في إجابتك. تأكد من نوع كل متغير وعلامات التنصيص والفاصلة المنقوطة.</p><pre class="lesson-code" dir="ltr"><code>String name = "Sara";
+int age = 20;
+System.out.println(name);
+System.out.println(age);</code></pre></div>
+          </article>
+        </div>
+        <aside class="learning-card completion-card" aria-label="إنجاز الدرس">
+          <span class="eyebrow">خطوتك الأولى</span><h3>فهمت؟ جرّبت؟ أحسنت.</h3><p>بعد قراءة الشرح وتجربة التمرين، سجّل إكمال الدرس.</p>
+          <button class="button" id="complete-lesson" type="button">أكملت الدرس · +10 XP</button>
+          <p id="completion-feedback" class="feedback" role="status"></p>
+          <p class="learning-note">تُضاف النقاط مرة واحدة لهذا الدرس. يُحفظ الإنجاز على هذا المتصفح فقط؛ قد يختفي عند مسح بياناته.</p>
+          <p id="storage-feedback" class="learning-note" role="status"></p>
+        </aside>
       </div>
     </section>
   </main>
