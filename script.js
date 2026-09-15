@@ -84,3 +84,94 @@ document.querySelector('#solution-toggle').addEventListener('click', (event) => 
   event.currentTarget.setAttribute('aria-expanded', String(!solution.hidden));
   event.currentTarget.textContent = solution.hidden ? 'إظهار الحل النموذجي' : 'إخفاء الحل النموذجي';
 });
+
+/* Account screens: presentation and client-side validation only. */
+const authDialog = document.querySelector('#auth-dialog');
+const authForm = document.querySelector('#auth-form');
+const authPassword = document.querySelector('#auth-password');
+const authConfirm = document.querySelector('#auth-confirm');
+const authName = document.querySelector('#auth-name');
+const authFeedback = document.querySelector('#auth-feedback');
+const passwordToggle = document.querySelector('#password-toggle');
+let authMode = 'login';
+function setAuthMode(mode) {
+  authMode = mode;
+  authForm.reset();
+  authConfirm.setCustomValidity('');
+  authName.setCustomValidity('');
+  authFeedback.textContent = '';
+  const signup = mode === 'signup';
+  const reset = mode === 'reset';
+  document.querySelector('#auth-title').textContent = signup ? 'ابدأ خطوتك الأولى.' : reset ? 'نسيت كلمة المرور؟' : 'سعداء بعودتك.';
+  document.querySelector('#auth-description').textContent = reset ? 'معاينة لاستعادة كلمة المرور؛ لن يُرسل أي بريد.' : 'واجهة تجريبية فقط؛ لن تُرسل بياناتك أو يُنشأ حساب.';
+  document.querySelector('#auth-submit').textContent = signup ? 'تجربة إنشاء حساب ←' : reset ? 'معاينة طلب الاستعادة ←' : 'تجربة تسجيل الدخول ←';
+  document.querySelector('#auth-name-field').hidden = !signup;
+  document.querySelector('#auth-confirm-field').hidden = !signup;
+  document.querySelector('#auth-password-field').hidden = reset;
+  document.querySelector('#password-hint').hidden = !signup;
+  document.querySelector('#forgot-password').hidden = mode !== 'login';
+  document.querySelector('#back-to-login').hidden = !reset;
+  authName.disabled = authConfirm.disabled = !signup;
+  authName.required = authConfirm.required = signup;
+  authPassword.disabled = reset;
+  authPassword.required = !reset;
+  authPassword.minLength = signup ? 8 : 1;
+  authPassword.type = 'password';
+  passwordToggle.textContent = 'إظهار';
+  passwordToggle.setAttribute('aria-label', 'إظهار كلمة المرور');
+  passwordToggle.setAttribute('aria-pressed', 'false');
+  document.querySelectorAll('[data-auth-mode]').forEach(button => {
+    button.setAttribute('aria-pressed', String(button.dataset.authMode === mode));
+  });
+}
+document.querySelector('#open-login').addEventListener('click', () => {
+  setAuthMode('login');
+  authDialog.showModal();
+  document.body.classList.add('auth-is-open');
+  document.querySelector('#auth-email').focus();
+});
+document.querySelector('#close-auth').addEventListener('click', () => authDialog.close());
+document.querySelector('#auth-home').addEventListener('click', () => authDialog.close());
+authDialog.addEventListener('close', () => {
+  authForm.reset();
+  authPassword.type = 'password';
+  authFeedback.textContent = '';
+  document.body.classList.remove('auth-is-open');
+  document.querySelector('#open-login').focus();
+});
+document.querySelectorAll('[data-auth-mode]').forEach(button => button.addEventListener('click', () => setAuthMode(button.dataset.authMode)));
+document.querySelector('#forgot-password').addEventListener('click', () => {
+  setAuthMode('reset');
+  document.querySelector('#auth-email').focus();
+});
+document.querySelector('#back-to-login').addEventListener('click', () => setAuthMode('login'));
+passwordToggle.addEventListener('click', () => {
+  const reveal = authPassword.type === 'password';
+  authPassword.type = reveal ? 'text' : 'password';
+  passwordToggle.textContent = reveal ? 'إخفاء' : 'إظهار';
+  passwordToggle.setAttribute('aria-label', reveal ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور');
+  passwordToggle.setAttribute('aria-pressed', String(reveal));
+});
+function validateAuthFields() {
+  authConfirm.setCustomValidity(authMode === 'signup' && authConfirm.value !== authPassword.value ? 'كلمتا المرور غير متطابقتين.' : '');
+  authName.setCustomValidity(authMode === 'signup' && !authName.value.trim() ? 'أدخل اسمًا غير فارغ.' : '');
+}
+authForm.addEventListener('input', () => {
+  authFeedback.textContent = '';
+  validateAuthFields();
+});
+authForm.addEventListener('submit', event => {
+  event.preventDefault();
+  validateAuthFields();
+  if (!authForm.reportValidity()) return;
+  authFeedback.textContent = authMode === 'signup'
+    ? 'اكتملت معاينة النموذج بنجاح. لم يُنشأ حساب ولم تُحفظ بياناتك.'
+    : authMode === 'reset'
+      ? 'اكتملت معاينة طلب الاستعادة. لم يُرسل بريد إلكتروني.'
+      : 'اكتملت معاينة تسجيل الدخول. لم يتم التحقق من حساب أو إنشاء جلسة دخول.';
+  authForm.reset();
+  authPassword.type = 'password';
+  passwordToggle.textContent = 'إظهار';
+  passwordToggle.setAttribute('aria-label', 'إظهار كلمة المرور');
+  passwordToggle.setAttribute('aria-pressed', 'false');
+});
